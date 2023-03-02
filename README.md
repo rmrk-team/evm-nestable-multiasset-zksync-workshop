@@ -23,7 +23,7 @@ We've prepared a template repository for you to get started with. It includes a 
 
 The easiest way to get started is to fork the template repository and clone it to your local machine. You can do so by clicking the "Use this template" button on the template repository page.
 
-**NOTE: If you intend to use the teplate repository with the ZKSync network, make sure to select the `Include all branches` option and use the `zksync` branch.**
+**NOTE: If you intend to use the template repository with the ZKSync network, make sure to select the `Include all branches` option and use the `zksync` branch.**
 
 Once you have the template repository cloned to your local machine, you can install the dependencies by running the following command:
 
@@ -114,7 +114,7 @@ As the initial `totalSupply` will be `0`, we don't need to assign any value to i
     }
 ```
 
-The execution of the minting function shoul be reverted if attempting to mint `0` tokens, minting to `0x0` address or if minting the desired `amount` of tokens would exceed the `maxSupply` of the collection. If any of these conditions are met, the execution should be reverted with custom errors. To be able to use them, they need to be defined below the import statements:
+The execution of the minting function should be reverted if attempting to mint `0` tokens, minting to `0x0` address or if minting the desired `amount` of tokens would exceed the `maxSupply` of the collection. If any of these conditions are met, the execution should be reverted with custom errors. To be able to use them, they need to be defined below the import statements:
 
 ```solidty
 error MintOverMaxSupply();
@@ -122,7 +122,7 @@ error ZeroAddress();
 error ZeroAmount();
 ```
 
-The `_mint` function of the `RMRKNestableMultiAsset` accepts the minting destination, the ID of the token to be m minted and the `data` field (to which we will pass an empty value). To properly mint the desired amount of tokens, we need to make sure that the IDs don't overlap and that the total and maximum supply values are kept up to date. To do so, we will define a `nextTokenId` variable, which will be used to keep track of the next token ID to be minted. We will also update the total supply and use it to keep track of how many more tokens we can mint.
+The `_mint` function of the `RMRKNestableMultiAsset` accepts the minting destination, the ID of the token to be minted and the `data` field (to which we will pass an empty value). To properly mint the desired amount of tokens, we need to make sure that the IDs don't overlap and that the total and maximum supply values are kept up to date. To do so, we will define a `nextTokenId` variable, which will be used to keep track of the next token ID to be minted. We will also update the total supply and use it to keep track of how many more tokens we can mint.
 
 We also need to make sure that only the owner is allowed to call the `mint` function, so we need to include the `onlyOwner` modifier as well.
 
@@ -186,7 +186,7 @@ We will design `addAssetToTokens` in a way that accepts an array of token IDs th
 
 Since the assets need to be accepted once they are added to a token, we will streamline the process by accepting the asset if the token is owned by the owner of the smart contract. This will allow us to add the assets to the tokens without the need to accept them manually.
 
-To check whether the token recieving the asset is owned by the owner of the smart contract, we will use the `ownerOf` function. The `ownerOf` function returns the ***root owner*** of the token, which means that if the token is nested, it will return the address of the owner of the parent token. This is the address we need to check against the owner of the smart contract. We can afford to make the assumption that the tokens aren't nested, as the Album NFTs won't be nested.
+To check whether the token receiving the asset is owned by the owner of the smart contract, we will use the `ownerOf` function. The `ownerOf` function returns the ***root owner*** of the token, which means that if the token is nested, it will return the address of the owner of the parent token. This is the address we need to check against the owner of the smart contract. We can afford to make the assumption that the tokens aren't nested, as the Album NFTs won't be nested.
 
 Another assumption we will be making is that the newly added asset resides in the last position of the pending array of the token. This is because the assets are added to the pending array in the order they are added to the token. This means that the asset being added will always be the last one in the pending array. An important distinction compared to token IDs to note is that the pending array is zero-indexed, so the last asset will have the index of `length - 1`.
 
@@ -425,7 +425,7 @@ contract Song is RMRKNestableMultiAsset, RMRKSoulbound, Ownable {
 
 ```
 
-Unfortunately importing `RMRKSoulbound` will require the `_beforeTokenTransfer` hook and `supportsInterface` to be overriden. We will override them as follows:
+Unfortunately inheriting `RMRKSoulbound` will require the `_beforeTokenTransfer` hook and `supportsInterface` to be overriden. We will override them as follows:
 
 ```solidity
     function _beforeTokenTransfer(
@@ -549,7 +549,7 @@ Unfortunately importing `RMRKSoulbound` will require the `_beforeTokenTransfer` 
         }
 </details>
 
-This concludes the implementation of the Song NFT smart contract. We can now use the `prettier` and `typechain` sctipts to format the code and generate the typechain bindings. We willl also need to compile the smart contracts, so we will run the following commands:
+This concludes the implementation of the Song NFT smart contract. We can now use the `prettier` and `typechain` sctipts to format the code and generate the typechain bindings. We will also need to compile the smart contracts, so we will run the following commands:
 
 ```bash
 yarn prettier && yarn hardhat compile --network zkSyncTestnet && yarn typechain
@@ -557,7 +557,7 @@ yarn prettier && yarn hardhat compile --network zkSyncTestnet && yarn typechain
 
 ## Deploying the smart contracts
 
-As the smart contracts are ready, we can write the deplouyment script. We will create a new file in the `deploy` directory called `deploy.ts`. 
+As the smart contracts are ready, we can write the deployment script. We will create a new file in the `deploy` directory called `deploy.ts`. 
 
 We will import `delay` from `hardhat-etherscan`, `Deployer` from `hardhat-zksync-deploy`, `HardhatRuntimeEnvironment` from `hardhat/types`, `run` from `hardhat`, `Album` and `Song` from `typechain-types`, `Wallet` and `utils` from `zksync-web3` and `ethers` from `ethers`. Additionally we will add the skeleton of the deployment function:
 
@@ -663,7 +663,7 @@ Everything is now ready to deploy the Album NFT smart contract:
 
 ### Verifying the smart contracts in the chain explorer
 
-All that remains after the smart contracts have been deployed is to verify them in the chain explorer. Before initiating the verification, we will add a delay of 2 seconds, to make sure the chain explorer is ready for the verification. We will use the `verify` task from `hardhat-etherscan` to do so. We will pass the address, constructor argument and smart contract for each of the smart contracts to the task:
+All that remains after the smart contracts have been deployed is to verify them in the chain explorer. Before initiating the verification, we will add a delay of 20 seconds, to make sure the chain explorer is ready for the verification. We will use the `verify` task from `hardhat-etherscan` to do so. We will pass the address, constructor argument and smart contract for each of the smart contracts to the task:
 
 ```typescript
   await delay(20000);
@@ -788,7 +788,7 @@ In order to better observe the interaction and the operation of RMRK-powered sma
 6. Adding asset entries for the Song NFTs
 7. Adding assets to the Song NFTs
 
-As running the script would be waistful in a public network, the script will be designed to be run in the Hardhat's emulated network. The user journey script will reside in the `scripts` directory and will be named `user-journey.ts`.
+As running the script would be wasteful in a public network, the script will be designed to be run in the Hardhat's emulated network. The user journey script will reside in the `scripts` directory and will be named `user-journey.ts`.
 
 The empty skeleton of the script will look as follows:
 
@@ -1033,7 +1033,7 @@ The `childrenOf` function returns the array of active tokens that contains the t
 
 The `directOwnerOf` function returns the token ID and the smart contract address of the direct owner of the parent token, as well as a boolean value indicating whether the direct owner of the token is an NFT or not. In case the direct owner is not an NFT, the token ID is `0`.
 
-The `ownerOf` function returns the address of the root owner of the token. This means that it returns the addess of the first non-token owner in the parent-token chain.
+The `ownerOf` function returns the address of the root owner of the token. This means that it returns the address of the first non-token owner in the parent-token chain.
 
 **NOTE: It is worth noting that a child token can also be a parent token to another token.**
 
