@@ -2,7 +2,7 @@
 
 This workshop examines the Nestable and MultiAsset RMRK legos in action and shows how they can be used to create a new next-generation NFT collection.
 
-The easiest way of doing so, is by defing a use case utilizing both legos and then building a collection around it. So let's do just that!
+The easiest way of doing so, is by defining a use case utilizing both legos and then building a collection around it. So let's do just that!
 
 ## Use Case
 
@@ -37,7 +37,7 @@ You can explore the template repository, compile the smart contract and run the 
 yarn hardhat compile && yarn hardhat test
 ```
 
-Once you are ready, you can remove the `Equippable` smart contract and the tests for it. You can also remove the `deploy.js` scrip as we will not be using them in this workshop:
+Once you are ready, you can remove the `Equippable` smart contract and the tests for it. You can also remove the `deploy.js` script as we will not be using them in this workshop:
 
 ```bash
 rm contracts/SimpleEquippable.sol && rm test/equippable.ts && rm scripts/deploy.ts
@@ -102,7 +102,7 @@ In order to automatically increment the token IDs, we need to define a the total
     uint256 public maxSupply;
 ```
 
-As the initial `totalSupply` will be `0`, we don't need to assign any value to it when deploying the smart contract. However, we will need to assign a value to the `maxSupply` variable. We will assign its value in the constructor uising the `maxSupply_` parameter. The updated `constructor` should look like this:
+As the initial `totalSupply` will be `0`, we don't need to assign any value to it when deploying the smart contract. However, we will need to assign a value to the `maxSupply` variable. We will assign its value in the constructor using the `maxSupply_` parameter. The updated `constructor` should look like this:
 
 ```solidity
     constructor(
@@ -575,10 +575,10 @@ export default async function (hre: HardhatRuntimeEnvironment) {
 }
 ```
 
-The deploy script will be comprised of three distrinct sections:
+The deploy script will be comprised of three distinct sections:
 
 1. Deploying the Album NFT smart contract
-2. Deploting the Song NFT smart contract
+2. Deploying the Song NFT smart contract
 3. Verifying the smart contracts in the chain explorer
 
 ### Deploying the Album NFT smart contract
@@ -1039,6 +1039,7 @@ The `ownerOf` function returns the address of the root owner of the token. This 
 
 <details>
     <summary>Expand this section for the full user journey script</summary>
+        
         import { ethers } from 'hardhat';
 
         async function main () {
