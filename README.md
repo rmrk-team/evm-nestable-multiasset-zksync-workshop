@@ -138,9 +138,9 @@ The `mint` function will look like this:
         unchecked {
             totalSupply += amount;
         }
-        uint256 maxSupplyOffset = maxSupply + 1;
+        uint256 totalSupplyOffset = maxSupply + 1;
 
-        for (uint256 i = nextTokenId; i < maxSupplyOffset; ){
+        for (uint256 i = nextTokenId; i < totalSupplyOffset; ){
             _safeMint(to, i, "");
             unchecked {
                 i++;
@@ -246,9 +246,9 @@ The `addAssetToTokens` function will look like this:
                 unchecked {
                     totalSupply += amount;
                 }
-                uint256 maxSupplyOffset = totalSupply + 1;
+                uint256 totalSupplyOffset = totalSupply + 1;
 
-                for (uint256 i = nextTokenId; i < maxSupplyOffset; ) {
+                for (uint256 i = nextTokenId; i < totalSupplyOffset; ) {
                     _safeMint(to, i, "");
                     unchecked {
                         i++;
@@ -351,9 +351,9 @@ With the errors defined, we can now implement the `nestMint` function:
         unchecked {
             totalSupply += amount;
         }
-        uint256 maxSupplyOffset = totalSupply + 1;
+        uint256 totalSupplyOffset = totalSupply + 1;
 
-        for (uint256 i = nextTokenId; i < maxSupplyOffset; ){
+        for (uint256 i = nextTokenId; i < totalSupplyOffset; ){
             _nestMint(to, i, destinationId, "");
             unchecked {
                 i++;
@@ -484,9 +484,9 @@ Unfortunately inheriting `RMRKSoulbound` will require the `_beforeTokenTransfer`
                 unchecked {
                     totalSupply += amount;
                 }
-                uint256 maxSupplyOffset = totalSupply + 1;
+                uint256 totalSupplyOffset = totalSupply + 1;
 
-                for (uint256 i = nextTokenId; i < maxSupplyOffset; ) {
+                for (uint256 i = nextTokenId; i < totalSupplyOffset; ) {
                     _nestMint(to, i, destinationId, "");
                     unchecked {
                         i++;

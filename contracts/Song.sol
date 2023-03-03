@@ -31,9 +31,9 @@ contract Song is RMRKNestableMultiAsset, RMRKSoulbound, Ownable {
         unchecked {
             totalSupply += amount;
         }
-        uint256 maxSupplyOffset = totalSupply + 1;
+        uint256 totalSupplyOffset = totalSupply + 1;
 
-        for (uint256 i = nextTokenId; i < maxSupplyOffset; ) {
+        for (uint256 i = nextTokenId; i < totalSupplyOffset; ) {
             _nestMint(to, i, destinationId, "");
             unchecked {
                 i++;
